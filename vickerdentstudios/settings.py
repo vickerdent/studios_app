@@ -14,7 +14,8 @@ import os
 import dj_database_url
 from pathlib import Path
 from decouple import config
-from tailwind_watcher import run_tailwind_watch # You'll need to change this to point to your tailwind_watcher file.
+# from tailwind_watcher import run_tailwind_watch # You'll need to change this to point to your tailwind_watcher file.
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -194,5 +195,5 @@ ADMINS = [("Victor", "vickerdent@gmail.com"),]
 MANAGERS = [("Victor", "vickerdent@gmail.com"),]
 
 
-if DEBUG:  # We only need to run the watcher in development (given reasons mentioned in the guide).
-    run_tailwind_watch()
+# if DEBUG:  # We only need to run the watcher in development (given reasons mentioned in the guide).
+#     run_tailwind_watch()
