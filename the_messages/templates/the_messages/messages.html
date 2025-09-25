@@ -1,0 +1,243 @@
+{% extends "the_messages/_base.html" %}
+<!-- Space -->
+{% block title %} Explore Messages {% endblock %}
+<!--  -->
+{% block content %}
+{% load static %}
+<script src="{% static 'src/messages.js' %}"></script>
+<style>
+  .hero-bg {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url("{% static 'src/images/crowd.jpg' %}");
+    background-position: top;
+    background-size: cover;
+  }
+</style>
+<!--  -->
+<!-- Header Section -->
+<section class="gradient-bg hero-bg py-20">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-12">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6">
+        Explore <span class="text-yellow-300">Messages</span>
+      </h1>
+      <p class="text-xl text-gray-200 max-w-3xl mx-auto">
+        Discover transformative messages from conferences, weekly & monthly gatherings,
+        and special events. Find exactly what speaks to your heart.
+      </p>
+    </div>
+
+    <!-- Search Bar -->
+    <div class="max-w-2xl mx-auto">
+      <form class="relative" method="GET" action="{% url 'messages' %}">
+        <input
+          type="text"
+          id="searchInput"
+          name="q"
+          value="{{ request.GET.q }}"
+          placeholder="Search messages, speakers, topics..."
+          class="w-full px-6 py-4 pl-14 rounded-full search-input text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
+        />
+        <svg
+          class="w-6 h-6 absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-300"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+          ></path>
+        </svg>
+        <button
+          type="submit"
+          class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white text-purple-700 px-6 py-2 rounded-full font-semibold hover:bg-gray-200 transition-colors cursor-pointer"
+        >
+          Search
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Filters Section -->
+<section
+  class="py-8 bg-gray-800 sticky top-16 z-30 backdrop-blur-lg bg-opacity-95"
+>
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex flex-wrap items-center justify-between gap-4">
+      <!-- Filter Categories -->
+      <div class="flex flex-wrap gap-3">
+        <a
+          href="{% querystring type=None %}"
+          class="filter-chip {% if 'type' not in request.GET %} active {% endif %} px-4 py-2 rounded-full bg-gray-700 text-sm font-medium hover:bg-purple-600 transition-colors cursor-pointer"
+          data-filter="all"
+        >
+          All Messages
+        </a>
+        <a
+          href="{% querystring type='conference' %}"
+          class="filter-chip {% if request.GET.type == 'conference' %} active {% endif %} px-4 py-2 rounded-full bg-gray-700 text-sm font-medium hover:bg-purple-600 transition-colors cursor-pointer"
+          data-filter="conference"
+        >
+          Conference Messages
+        </a>
+        <a
+          href="{% querystring type='others' %}"
+          class="filter-chip {% if request.GET.type == 'others' %} active {% endif %} px-4 py-2 rounded-full bg-gray-700 text-sm font-medium hover:bg-purple-600 transition-colors cursor-pointer"
+          data-filter="others"
+        >
+          Monthly Messages
+        </a>
+      </div>
+
+      <!-- Sort Dropdown -->
+      <div class="relative">
+        <select
+          id="sortSelect"
+          class="bg-gray-700 border border-gray-600 text-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 appearance-none pr-8"
+        >
+          <option {% if sort not in request.GET %} selected {% endif %} value="date_desc">Newest First</option>
+          <option {% if request.GET.sort == 'date_asc' %} selected {% endif %} value="date_asc">Oldest First</option>
+        </select>
+        <svg
+          class="w-4 h-4 absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          ></path>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Results Summary -->
+<section class="py-6 bg-gray-900">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="flex items-center justify-between">
+      <p class="text-gray-400">
+        Showing
+        <span id="resultsCount" class="text-white font-semibold">{{ page_obj.object_list|length }}</span>
+        messages
+      </p>
+      <div class="flex items-center space-x-4">
+        <span class="text-sm text-gray-400">View:</span>
+        <button
+          id="gridView"
+          class="p-2 bg-purple-600 rounded-lg hover:bg-purple-700 transition-colors cursor-pointer"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"
+            ></path>
+          </svg>
+        </button>
+        <button
+          id="listView"
+          class="p-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors cursor-pointer"
+        >
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              fill-rule="evenodd"
+              d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
+              clip-rule="evenodd"
+            ></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Messages Grid -->
+<section class="py-12 bg-gray-900">
+  <div class="max-w-7xl mx-auto px-6">
+    <div
+      id="messagesGrid"
+      class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+    >
+      {% for message in page_obj %}
+        <a href="{% url 'message_details' message.id %}">
+          <div
+            class="message-card bg-gray-800 rounded-2xl overflow-hidden hover-glow slide-up"
+            data-speaker="{{ message.author.name }}"
+            data-date="{{ message.date }}"
+            style="--delay: 0.{{ forloop.counter }}s"
+          >
+            <div
+              class="aspect-video relative group"
+            >
+              <img src="{{ message.thumbnail.url }}" alt="">
+              <div class="absolute top-4 left-4 flex space-x-2">
+                {% if message.is_sunday_service %}
+                  <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold">SUNDAY SERVICE</span>
+                {% endif %}
+                {% if message.part_of_group and message.message_group.is_conference %}
+                  <span
+                    class="bg-blue-500 text-white px-2 py-1 rounded-full text-xs font-semibold"
+                  >
+                    {{ message.message_group.conference_tag }}
+                  </span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="p-6">
+              <h3 class="text-lg font-bold mb-2 line-clamp-2">
+                {{ message.name }}
+              </h3>
+              <p class="text-gray-400 mb-2">{{ message.author.name }}</p>
+              <!-- <p>{{ message.thumbnail.url }}</p> -->
+              <p class="text-gray-300 text-sm mb-4 line-clamp-3">
+                {{ message.description }}
+              </p>
+              <div
+                class="flex items-center justify-between text-xs text-gray-200 mb-3"
+              >
+                <span>{{ message.message_group.name }}</span>
+                <span>{{ message.date|date:"D d M Y" }}</span>
+              </div>
+              <!-- <div class="flex items-center justify-between">
+                <span class="text-xs text-gray-500">2.1k views</span>
+              </div> -->
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+
+  <nav class="w-full flex justify-center mt-16">
+    <ul class="flex items-center -space-x-px h-10 text-base">
+      {% if page_obj.paginator.num_pages > 1 %}
+        {% for page in page_obj.paginator.page_range %}
+          {% if forloop.first %}
+            <li>
+              <a href="{% querystring page=page.number %}" class="flex items-center justify-center px-4 h-10 ms-0 leading-tight border border-e-0 rounded-s-lg bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white">Previous</a>
+            </li>
+          {% elif forloop.last %}
+            <li>
+              <a href="{% querystring page=page.number %}" class="flex items-center justify-center px-4 h-10 leading-tight border rounded-e-lg bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white">Next</a>
+            </li>
+          {% else %}
+            <li>
+              <a href="{% querystring page=page.number %}" class="flex items-center justify-center px-4 h-10 leading-tight border {% if page_obj.number == page.number %} hover:bg-blue-100 hover:text-blue-700 border-gray-700 bg-gray-700 text-white {% else %} bg-gray-800 border-gray-700 text-gray-400 hover:bg-gray-700 hover:text-white {% endif %}">{{ page.number }}</a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </ul>
+  </nav>
+
+</section>
+
+{% endblock content %}

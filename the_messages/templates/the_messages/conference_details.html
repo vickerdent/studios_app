@@ -1,0 +1,177 @@
+{% extends "the_messages/_base.html" %}
+<!-- Space -->
+{% block title %} {{ conference.conference_name }} | Conferences {% endblock %}
+<!--  -->
+{% block content %}
+  {% load static %}
+  <script src="{% static 'src/conference_details.js' %}"></script>
+  <!-- Breadcrumb -->
+  <section class="bg-gray-800 py-4">
+    <div class="max-w-7xl mx-auto px-6">
+      <nav class="flex items-center gap-2 text-sm text-gray-400">
+        <a href="{% url 'home' %}" class="hover:text-white transition-colors">Home</a>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+        <a href="{% url 'conferences' %}" class="hover:text-white transition-colors">Conferences</a>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+        <span class="text-white">{{ conference.conference_name }}</span>
+      </nav>
+    </div>
+  </section>
+
+  <!-- Hero Section -->
+  <section class="gradient-bg py-20 hero-pattern relative overflow-hidden">
+    <!-- Floating elements -->
+    <div class="absolute top-20 left-10 w-24 h-24 bg-white opacity-5 rounded-full floating"></div>
+    <div class="absolute top-32 right-16 w-16 h-16 bg-white opacity-10 rounded-full pulse-ring"></div>
+    <div class="absolute bottom-20 left-1/4 w-32 h-32 bg-white opacity-5 rounded-full floating" style="animation-delay: 1.5s;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-12">
+        <div class="mb-4">
+          <a href="{% url 'conferences' %}" class="text-purple-200 hover:text-white transition-colors text-sm">
+            ← Back to Conferences
+          </a>
+        </div>
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+          <span class="text-yellow-300">{{ conference.conference_name }}</span>
+        </h1>
+        <p class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto leading-relaxed mb-8">
+          Experience powerful messages from anointed speakers across four transformative days of teaching and power.
+        </p>
+
+        <!-- Conference Info Cards -->
+        <div class="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
+          <div class="glass-effect rounded-xl p-6 text-center">
+            <div class="text-2xl font-bold text-yellow-300">4 Days</div>
+            <div class="text-sm text-gray-300">October 25-28, 2024</div>
+          </div>
+          <div class="glass-effect rounded-xl p-6 text-center">
+            <div class="text-2xl font-bold text-yellow-300">7 Sessions</div>
+            <div class="text-sm text-gray-300">Morning & Evening</div>
+          </div>
+          <div class="glass-effect rounded-xl p-6 text-center">
+            <div class="text-2xl font-bold text-yellow-300">18 Messages</div>
+            <div class="text-sm text-gray-300">Powerful Teachings</div>
+          </div>
+          <div class="glass-effect rounded-xl p-6 text-center">
+            <div class="text-2xl font-bold text-yellow-300">The Glory Dome</div>
+            <div class="text-sm text-gray-300">Airport Road, Abuja</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Conference Schedule Overview -->
+  <section class="py-16 bg-gray-900">
+      <div class="max-w-7xl mx-auto px-6">
+          <div class="text-center mb-12">
+              <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                  Conference <span class="text-gradient">Schedule</span>
+              </h2>
+              <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                  Join us for four transformative days of worship, teaching, and fellowship
+              </p>
+          </div>
+
+          <div class="grid md:grid-cols-4 gap-6 mb-16">
+              <!-- Tuesday -->
+              <div class="day-card bg-gray-800 rounded-2xl p-6 text-center hover-glow">
+                  <div class="text-3xl font-bold mb-2 text-purple-400">TUE</div>
+                  <div class="text-lg font-semibold mb-4">October 25</div>
+                  <div class="space-y-2 text-sm text-gray-300">
+                      <div class="bg-gray-700 rounded-lg p-2">
+                          <div class="font-semibold">Morning Session</div>
+                          <div class="text-xs">9:00 AM</div>
+                      </div>
+                      <div class="bg-gray-700 rounded-lg p-2">
+                          <div class="font-semibold">Evening Session</div>
+                          <div class="text-xs">6:00 PM</div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Wednesday -->
+              <div class="day-card bg-gray-800 rounded-2xl p-6 text-center hover-glow">
+                  <div class="text-3xl font-bold mb-2 text-blue-400">WED</div>
+                  <div class="text-lg font-semibold mb-4">October 26</div>
+                  <div class="space-y-2 text-sm text-gray-300">
+                      <div class="bg-gray-700 rounded-lg p-2">
+                          <div class="font-semibold">Morning Session</div>
+                          <div class="text-xs">9:00 AM</div>
+                      </div>
+                      <div class="bg-gray-700 rounded-lg p-2">
+                          <div class="font-semibold">Evening Session</div>
+                          <div class="text-xs">6:00 PM</div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Thursday -->
+              <div class="day-card bg-gray-800 rounded-2xl p-6 text-center hover-glow">
+                  <div class="text-3xl font-bold mb-2 text-green-400">THU</div>
+                  <div class="text-lg font-semibold mb-4">October 27</div>
+                  <div class="space-y-2 text-sm text-gray-300">
+                      <div class="bg-gray-700 rounded-lg p-2">
+                          <div class="font-semibold">Morning Session</div>
+                          <div class="text-xs">9:00 AM</div>
+                      </div>
+                      <div class="bg-gray-700 rounded-lg p-2">
+                          <div class="font-semibold">Evening Session</div>
+                          <div class="text-xs">6:00 PM</div>
+                      </div>
+                  </div>
+              </div>
+
+              <!-- Friday -->
+              <div class="day-card bg-gray-800 rounded-2xl p-6 text-center hover-glow">
+                  <div class="text-3xl font-bold mb-2 text-orange-400">FRI</div>
+                  <div class="text-lg font-semibold mb-4">October 28</div>
+                  <div class="space-y-2 text-sm text-gray-300">
+                      <div class="bg-gray-700 rounded-lg p-2">
+                          <div class="font-semibold">Morning Session</div>
+                          <div class="text-xs">9:00 AM</div>
+                      </div>
+                      <div class="bg-gradient-to-r from-orange-600 to-red-600 rounded-lg p-2">
+                          <div class="font-semibold">All-Night Session</div>
+                          <div class="text-xs">9:00 PM - 6:00 AM</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <!-- Messages by Day -->
+  <section class="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">
+          Conference <span class="text-gradient">Messages</span>
+        </h2>
+        <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+          Watch or listen to every powerful message from Grace & Glory 2024
+        </p>
+      </div>
+
+      <!-- Tuesday Messages -->
+      <div class="mb-16">
+        <div class="flex items-center mb-8">
+          <div class="bg-purple-600 rounded-full w-12 h-12 flex items-center justify-center mr-4">
+            <span class="text-white font-bold">25</span>
+          </div>
+          <div>
+            <h3 class="text-3xl font-bold">Tuesday, October 25</h3>
+            <p class="text-gray-400">Day 1</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+{% endblock content %}

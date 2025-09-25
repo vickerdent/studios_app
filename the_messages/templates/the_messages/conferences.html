@@ -1,0 +1,632 @@
+{% extends "the_messages/_base.html" %}
+<!-- Space -->
+{% block title %} Conferences {% endblock %}
+
+{% block content %}
+{% load static %}
+<script src="{% static 'src/conferences.js' %}"></script>
+<!--  -->
+<section class="gradient-bg py-24 hero-pattern relative overflow-hidden">
+  <!-- Floating elements -->
+  <div
+    class="absolute top-20 left-10 w-24 h-24 bg-white opacity-5 rounded-full floating"
+  ></div>
+  <div
+    class="absolute top-32 right-16 w-16 h-16 bg-white opacity-10 rounded-full pulse-ring"
+  ></div>
+  <div
+    class="absolute bottom-20 left-1/4 w-32 h-32 bg-white opacity-5 rounded-full floating"
+    style="animation-delay: 1.5s"
+  ></div>
+
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <div class="text-center mb-16">
+      <h1 class="text-6xl md:text-7xl font-bold mb-8 leading-tight">
+        Life-Changing <span class="text-yellow-300">Conferences</span>
+      </h1>
+      <p
+        class="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto leading-relaxed"
+      >
+        Experience transformative gatherings where faith meets community. Join
+        thousands in worship, teaching, and fellowship at our premier conference
+        events.
+      </p>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+      <div
+        class="glass-effect rounded-2xl p-8 text-center hover:bg-white hover:bg-opacity-20 transition-all"
+      >
+        <div class="text-4xl font-bold mb-2 text-yellow-300">25+</div>
+        <div class="text-gray-300">Annual Events</div>
+      </div>
+      <div
+        class="glass-effect rounded-2xl p-8 text-center hover:bg-white hover:bg-opacity-20 transition-all"
+      >
+        <div class="text-4xl font-bold mb-2 text-yellow-300">50K+</div>
+        <div class="text-gray-300">Lives Impacted</div>
+      </div>
+      <div
+        class="glass-effect rounded-2xl p-8 text-center hover:bg-white hover:bg-opacity-20 transition-all"
+      >
+        <div class="text-4xl font-bold mb-2 text-yellow-300">100+</div>
+        <div class="text-gray-300">World-Class Speakers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Next Conference Countdown -->
+<section class="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
+  <div class="max-w-7xl mx-auto px-6">
+    <div
+      class="bg-gradient-to-r from-purple-900 via-blue-900 to-purple-900 rounded-3xl p-1 conference-card hover-glow"
+    >
+      <div class="bg-gray-800 rounded-3xl py-8 px-2 md:p-12">
+        <div class="text-center mb-12 px-6">
+          <span
+            id="upcomingDate"
+            data-date="{{ upcoming_conference.start_date }}"
+            class="bg-gradient-to-r from-green-400 to-emerald-500 text-gray-900 px-4 py-2 rounded-full text-sm font-bold mb-4 inline-block"
+          >
+            NEXT EVENT
+          </span>
+          <h2 class="text-4xl md:text-5xl font-bold mb-4">
+            <span class="text-gradient">{{ upcoming_conference.conference_name }}</span>
+          </h2>
+          <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            {{ upcoming_conference.description }}
+          </p>
+        </div>
+
+        <!-- Countdown Timer -->
+        <div class="grid grid-cols-4 gap-4 max-w-2xl mx-auto mb-12">
+          <div class="bg-gray-700 rounded-xl p-4 text-center">
+            <div
+              id="days"
+              class="text-3xl font-bold text-purple-400 countdown-timer"
+            >
+              24
+            </div>
+            <div class="text-sm text-gray-400">Days</div>
+          </div>
+          <div class="bg-gray-700 rounded-xl p-4 text-center">
+            <div
+              id="hours"
+              class="text-3xl font-bold text-purple-400 countdown-timer"
+            >
+              18
+            </div>
+            <div class="text-sm text-gray-400">Hours</div>
+          </div>
+          <div class="bg-gray-700 rounded-xl p-4 text-center">
+            <div
+              id="minutes"
+              class="text-3xl font-bold text-purple-400 countdown-timer"
+            >
+              42
+            </div>
+            <div class="text-sm text-gray-400">Minutes</div>
+          </div>
+          <div class="bg-gray-700 rounded-xl p-4 text-center">
+            <div
+              id="seconds"
+              class="text-3xl font-bold text-purple-400 countdown-timer"
+            >
+              15
+            </div>
+            <div class="text-sm text-gray-400">Seconds</div>
+          </div>
+        </div>
+
+        <!-- Event Details -->
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+          <div class="text-center">
+            <div
+              class="bg-purple-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+            >
+              <svg
+                class="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold mb-2">When</h3>
+            <p class="text-gray-300">{{ upcoming_conference.start_date|date:"F d" }}-{{ upcoming_conference.end_date|date:"d, Y" }}</p>
+          </div>
+          <div class="text-center">
+            <div
+              class="bg-blue-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+            >
+              <svg
+                class="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                ></path>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                ></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Where</h3>
+            <p class="text-gray-300">
+              {{ upcoming_conference.location }}
+            </p>
+          </div>
+          <div class="text-center">
+            <div
+              class="bg-green-600 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4"
+            >
+              <svg
+                class="w-8 h-8 text-white"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                ></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold mb-2">Capacity</h3>
+            <p class="text-gray-300">150,000 Attendees<br />Limited Seating</p>
+          </div>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <button
+            class="bg-gradient-to-r from-purple-600 to-blue-600 px-10 py-4 rounded-full font-bold text-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105"
+          >
+            Get Notification
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Conference Timeline -->
+<section class="py-20 bg-gray-900">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">
+        Conference <span class="text-gradient">Timeline</span>
+      </h2>
+      <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+        Experience a journey of faith through our carefully curated conference
+        schedule
+      </p>
+    </div>
+
+    <div class="relative max-w-4xl mx-auto">
+      <!-- Timeline line -->
+      <div
+        class="absolute left-1/2 transform -translate-x-1/2 h-full timeline-line"
+      ></div>
+
+      <!-- Timeline items -->
+      <div class="space-y-16">
+        <!-- Upcoming Event -->
+        <div class="relative flex items-center">
+          <div class="w-1/2 pr-8 text-right">
+            <div class="bg-gray-800 rounded-2xl p-6 conference-card hover-glow">
+              <div class="flex flex-col md:flex-row items-end md:items-center justify-end gap-2 mb-4">
+                <span class="bg-green-500 text-white px-3 py-1 rounded-full text-[10px] md:text-sm font-semibold">
+                  {% if upcoming_conference.status == "UC" %}
+                    {{ statuses.uc }}
+                  {% elif upcoming_conference.status == "OG" %}
+                    {{ statuses.og }}
+                  {% else %}
+                    {{ statuses.c }}
+                  {% endif %}
+                </span>
+                <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-[10px] md:text-sm font-semibold">
+                  {{ upcoming_conference.conference_tag }}
+                </span>
+              </div>
+              <h3 class="text-base md:text-2xl font-bold mb-2 text-gradient">
+                {{ upcoming_conference.conference_name }}
+              </h3>
+              <p class="text-gray-300 text-sm md:text-base mb-4">
+                {{ upcoming_conference.description|truncatewords:15 }}
+              </p>
+              <div class="flex flex-col md:flex-row items-end md:items-center justify-end gap-4 text-[10px] md:text-sm text-gray-400">
+                <span class="text-nowrap">
+                  {{ upcoming_conference.start_date|date:"M d" }}-{{ upcoming_conference.end_date|date:"d Y" }}
+                </span>
+                <span class="hidden md:flex">•</span>
+                <span>{{ upcoming_conference.location }}</span>
+              </div>
+            </div>
+          </div>
+          <div
+            class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 timeline-dot rounded-full border-4 border-gray-900 pulse-ring"
+          ></div>
+          <div class="w-1/2 pl-8"></div>
+        </div>
+
+        {% for conference in conferences %}
+          <div class="relative flex items-center">
+            {% if forloop.counter|divisibleby:"2" %}
+              <div class="w-1/2 pr-8 text-right">
+                <div class="bg-gray-800 rounded-2xl p-6 conference-card hover-glow">
+                  <div class="flex flex-col md:flex-row items-end md:items-center justify-end gap-2 mb-4">
+                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-[10px] md:text-sm font-semibold">
+                      {% if conference.status == "UC" %}
+                        {{ statuses.uc }}
+                      {% elif conference.status == "OG" %}
+                        {{ statuses.og }}
+                      {% else %}
+                        {{ statuses.c }}
+                      {% endif %}
+                    </span>
+                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-[10px] md:text-sm font-semibold">
+                      {{ conference.conference_tag }}
+                    </span>
+                  </div>
+                  <h3 class="text-base md:text-2xl font-bold mb-2">
+                    {{ conference.conference_name }}
+                  </h3>
+                  <p class="text-sm md:text-base text-gray-300 mb-4">
+                    {{ conference.description|truncatewords:15 }}
+                  </p>
+                  <div class="flex flex-col md:flex-row items-end md:items-center justify-end gap-4 text-[10px] md:text-sm text-gray-400 mb-4">
+                    <span class="text-nowrap">
+                      {{ conference.start_date|date:"M d" }}-{{ conference.end_date|date:"d Y" }}
+                    </span>
+                    <span class="hidden md:flex">•</span>
+                    <span>{{ conference.location }}</span>
+                  </div>
+                  <a href="{% url 'conference_details' conference.id %}" class="text-purple-400 hover:text-purple-300 text-[10px] md:text-sm font-semibold">
+                    View Recordings →
+                  </a>
+                </div>
+              </div>
+              <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-600 rounded-full border-4 border-gray-900"></div>
+              <div class="w-1/2 pl-8"></div>
+            {% else %}
+              <div class="w-1/2 pr-8"></div>
+              <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gray-600 rounded-full border-4 border-gray-900"></div>
+              <div class="w-1/2 pl-8">
+                <div class="bg-gray-800 rounded-2xl p-6 conference-card hover-glow">
+                  <div class="flex flex-col md:flex-row items-start md:items-center gap-2 mb-4">
+                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-[10px] md:text-sm font-semibold">
+                      {% if conference.status == "UC" %}
+                        {{ statuses.uc }}
+                      {% elif conference.status == "OG" %}
+                        {{ statuses.og }}
+                      {% else %}
+                        {{ statuses.c }}
+                      {% endif %}
+                    </span>
+                    <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-[10px] md:text-sm font-semibold">
+                      {{ conference.conference_tag }}
+                    </span>
+                  </div>
+                  <h3 class="text-base md:text-2xl font-bold mb-2">
+                    {{ conference.conference_name }}
+                  </h3>
+                  <p class="text-sm md:text-base text-gray-300 mb-4">
+                    {{ conference.description|truncatewords:15 }}
+                  </p>
+                  <div class="flex flex-col md:flex-row items-start md:items-center justify-start gap-4 text-[10px] md:text-sm text-gray-400 mb-4">
+                    <span class="text-nowrap">
+                      {{ conference.start_date|date:"M d" }}-{{ conference.end_date|date:"d Y" }}
+                    </span>
+                    <span class="hidden md:flex">•</span>
+                    <span>{{ conference.location }}</span>
+                  </div>
+                  <a href="{% url 'conference_details' conference.id %}" class="text-purple-400 hover:text-purple-300 text-[10px] md:text-sm font-semibold">
+                    View Recordings →
+                  </a>
+                </div>
+              </div>
+              {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Speakers Section -->
+<!-- <section class="py-20 bg-gradient-to-b from-gray-900 to-gray-800">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">
+        Featured <span class="text-gradient">Speakers</span>
+      </h2>
+      <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+        Learn from world-renowned speakers who bring biblical truth with power
+        and clarity
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div
+        class="bg-gray-800 rounded-2xl overflow-hidden conference-card hover-glow"
+      >
+        <div
+          class="aspect-square bg-gradient-to-br from-purple-500 to-pink-500 relative"
+        >
+          <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+          <div class="absolute bottom-6 left-6 right-6">
+            <h3 class="text-xl font-bold mb-1">Dr. Sarah Johnson</h3>
+            <p class="text-gray-200 text-sm">Senior Pastor & Author</p>
+          </div>
+        </div>
+        <div class="p-6">
+          <p class="text-gray-300 text-sm mb-4">
+            "Passionate about helping people discover their divine purpose and
+            walk in spiritual authority."
+          </p>
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-gray-400">25+ Years Ministry</span>
+            <button
+              class="text-purple-400 hover:text-purple-300 text-sm font-semibold"
+            >
+              View Profile →
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-12">
+      <button
+        class="bg-gradient-to-r from-purple-600 to-blue-600 px-8 py-4 rounded-full font-semibold text-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105"
+      >
+        View All Speakers
+      </button>
+    </div>
+  </div>
+</section> -->
+
+<!-- Conference Categories -->
+<section class="py-20 bg-gray-900">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">
+        Conference <span class="text-gradient">Types</span>
+      </h2>
+      <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+        Encounter God in the various Conferences that occur throughout the whole year!
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Annual Conferences -->
+      <div
+        class="glass-effect rounded-2xl p-8 text-center hover:bg-white hover:bg-opacity-20 transition-all conference-card"
+      >
+        <div
+          class="bg-gradient-to-br from-purple-500 to-blue-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Ministers' Conference</h3>
+        <p class="text-gray-300 mb-6">
+          Large-scale events featuring multiple speakers refiring ministers and church leaders.
+        </p>
+        <span class="text-purple-400 font-semibold text-sm">August</span>
+      </div>
+
+      <!-- Weekend Retreats -->
+      <div
+        class="glass-effect rounded-2xl p-8 text-center hover:bg-white hover:bg-opacity-20 transition-all conference-card"
+      >
+        <div
+          class="bg-gradient-to-br from-green-500 to-emerald-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Youth Conferences</h3>
+        <p class="text-gray-300 mb-6">
+          Intimate gatherings focused on youthful spiritual renewal and personal growth.
+        </p>
+        <span class="text-green-400 font-semibold text-sm">2nd Quarter</span>
+      </div>
+
+      <!-- Special Events -->
+      <div
+        class="glass-effect rounded-2xl p-8 text-center hover:bg-white hover:bg-opacity-20 transition-all conference-card"
+      >
+        <div
+          class="bg-gradient-to-br from-orange-500 to-red-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Destiny Recovery Conventions</h3>
+        <p class="text-gray-300 mb-6">
+          Encounter God, and recover your own destiny.
+        </p>
+        <span class="text-orange-400 font-semibold text-sm">May</span>
+      </div>
+
+      <!-- Online Events -->
+      <div
+        class="glass-effect rounded-2xl p-8 text-center hover:bg-white hover:bg-opacity-20 transition-all conference-card"
+      >
+        <div
+          class="bg-gradient-to-br from-pink-500 to-purple-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6"
+        >
+          <svg
+            class="w-8 h-8 text-white"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+            ></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold mb-4">Kingdom Glory Conference</h3>
+        <p class="text-gray-300 mb-6">
+          The focus is God's Kingdom, on His Earth.
+        </p>
+        <span class="text-pink-400 font-semibold text-sm">November</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<!-- <section class="py-20 bg-gradient-to-b from-gray-800 to-gray-900">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">
+        What People <span class="text-gradient">Say</span>
+      </h2>
+      <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+        Hear from attendees whose lives have been transformed through our
+        conferences
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-gray-800 rounded-2xl p-8 conference-card hover-glow">
+        <div class="flex items-center mb-6">
+          <div
+            class="w-12 h-12 bg-gradient-to-br from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold"
+          >
+            J
+          </div>
+          <div class="ml-4">
+            <h4 class="font-semibold">Jessica Martinez</h4>
+            <p class="text-gray-400 text-sm">Atlanta, GA</p>
+          </div>
+        </div>
+        <p class="text-gray-300 mb-6">
+          "The Grace & Glory conference completely transformed my understanding
+          of God's love. I left feeling renewed and equipped with practical
+          tools for my spiritual journey."
+        </p>
+        <div class="flex items-center text-yellow-400">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            ></path>
+          </svg>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            ></path>
+          </svg>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            ></path>
+          </svg>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            ></path>
+          </svg>
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+            <path
+              d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
+            ></path>
+          </svg>
+          <span class="ml-2 text-sm text-gray-400">5.0</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- Newsletter Section -->
+<section
+  class="py-20 bg-gradient-to-r from-purple-900 to-blue-900 relative overflow-hidden"
+>
+  <div class="absolute inset-0 hero-pattern opacity-30"></div>
+  <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+    <h2 class="text-4xl md:text-5xl font-bold mb-6">
+      Stay <span class="text-yellow-300">Connected</span>
+    </h2>
+    <p class="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+      Be the first to know about upcoming conferences, and
+      exclusive speaker announcements.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+      <input
+        type="email"
+        placeholder="Enter your email address"
+        class="flex-1 px-6 py-4 rounded-full bg-white/20 backdrop-blur-lg border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-purple-400"
+      />
+      <button
+        class="bg-white text-purple-900 px-8 py-4 rounded-full font-bold hover:bg-gray-100 transition-colors whitespace-nowrap"
+      >
+        Subscribe
+      </button>
+    </div>
+
+    <p class="text-sm text-gray-300 mt-4">
+      No spam. Unsubscribe at any time. We respect your privacy.
+    </p>
+  </div>
+</section>
+{% endblock content %}
