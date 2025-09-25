@@ -6,8 +6,8 @@ def run_tailwind_watch():
     """
     command = [
         './tailwindcss',  # Make sure that this points to your tailwindcss file in your project.
-        '-i', './sim/static/css/input.css',  # input
-        '-o', './sim/static/css/output.css',  # output
+        '-i', './the_messages/static/src/input.css',  # input
+        '-o', './the_messages/static/src/output.css',  # output
         '--watch'
     ]
     subprocess.run(command)
