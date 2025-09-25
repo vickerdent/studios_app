@@ -2077,10 +2077,6 @@ video {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@plugin "flowbite/plugin";
-
-@source "../../node_modules/flowbite";
-
 html {
   scroll-behavior: smooth;
 }
