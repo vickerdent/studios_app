@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 import dj_database_url
 from pathlib import Path
-from decouple import config
+from decouple import config, Csv
 # from tailwind_watcher import run_tailwind_watch # You'll need to change this to point to your tailwind_watcher file.
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -29,7 +29,7 @@ SECRET_KEY = config("SECRET_KEY", default=")fi9e3+o-46(h9@1cutd4+jshbnw+$%5lqd*$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=True, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1,localhost", cast=Csv())
 
 # Application definition
 INSTALLED_APPS = [
@@ -148,6 +148,25 @@ USE_I18N = True
 
 USE_TZ = True
 
+# ==============================================================================
+# SECURITY SETTINGS
+# ==============================================================================
+# Note that when you use LOGGING, commandline doesn't throw up anything anymore,
+# or give you hints as to where you're at
+
+CSRF_TRUSTED_ORIGINS = config("CSRF_ORIGIN", default="http://127.0.0.1,http://localhost", cast=Csv())
+
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+
+    SECURE_HSTS_SECONDS = 60 * 60 * 24 * 7 * 52  # one year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    USE_X_FORWARDED_HOST = True
+    SESSION_COOKIE_SECURE = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
