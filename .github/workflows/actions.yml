@@ -1,0 +1,17 @@
+name: Deploy on server
+on:
+  push:
+    branches:
+      - production
+jobs:
+  deploy:
+    name: Deploy branch production
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout and restart the server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          script: echo hello world > hello.txt

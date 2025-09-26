@@ -122,7 +122,7 @@ class Attachment(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def clean(self):
-        if self.media_type.type_name == 'audio':
+        if self.media_type.type_name.lower() == 'audio':
             allowed_extensions = ['mp3', 'aac', 'wav', 'aiff', 'flac', 'alac']
         else:
             allowed_extensions = ['mp4', 'mov', 'avi', 'mkv', 'wmv']
