@@ -15,7 +15,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
-            su vickerdent
             mkdir -p ~/.ssh/ && touch ~/.ssh/known_hosts
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
             eval $(ssh-agent)
