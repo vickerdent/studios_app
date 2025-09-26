@@ -20,7 +20,7 @@ jobs:
             ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
             eval $(ssh-agent)
             ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
-            cd /home/vickerdent/vickerdentstudios
+            cd /home/vickerdent/studios_app
             source venv/bin/activate
             git config --global user.email "${{ secrets.GIT_EMAIL }}"
             git config --global user.name "${{ secrets.GIT_USERNAME }}"
