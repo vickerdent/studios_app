@@ -156,17 +156,17 @@ USE_TZ = True
 
 CSRF_TRUSTED_ORIGINS = config("CSRF_ORIGIN", default="http://127.0.0.1,http://localhost", cast=Csv())
 
-# if not DEBUG:
-#     CSRF_COOKIE_SECURE = True
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
 
-#     SECURE_HSTS_SECONDS = 60 * 60 * 24 * 7 * 52  # one year
-#     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-#     # SECURE_SSL_REDIRECT = True
-#     SECURE_BROWSER_XSS_FILTER = True
-#     SECURE_CONTENT_TYPE_NOSNIFF = True
-#     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-#     USE_X_FORWARDED_HOST = True
-#     SESSION_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = 60 * 60 * 24 * 7 * 52  # one year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_BROWSER_XSS_FILTER = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    USE_X_FORWARDED_HOST = True
+    SESSION_COOKIE_SECURE = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
