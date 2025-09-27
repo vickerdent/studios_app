@@ -28,7 +28,9 @@
       }
 
       .nav-bg {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
       .glass-effect {
@@ -87,6 +89,8 @@
         box-shadow: 0 0 30px rgba(102, 126, 234, 0.4);
       }
     </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2392453842656142"
+    crossorigin="anonymous"></script>
   </head>
   <body class="bg-gray-900 text-white overflow-x-hidden">
     <!-- Hero Section -->
@@ -405,6 +409,7 @@
     </section>
 
     <!-- Monthly Schedule Section -->
+    {% now "Y" as current_date %}
     <section class="py-24 bg-gradient-to-b from-gray-900 to-gray-800">
       <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
@@ -441,7 +446,7 @@
             <h3 class="text-2xl font-bold mb-4">Blessing Sunday Service</h3>
             <p class="text-gray-300 mb-6">Blessing Sunday Service.</p>
             <span class="text-purple-400 font-semibold">
-              Next: {{ first_sunday_next_month|date:"F d, Y" }}
+              {% if sunday_passed %} Next: {{ first_sunday_next_month|date:"F d, Y" }} {% else %} Holds: {{ first_sunday_this_month|date:"F d, Y" }} {% endif %}
             </span>
           </div>
 
@@ -469,11 +474,10 @@
               Preservation & Power Communion Service
             </h3>
             <p class="text-gray-300 mb-6">
-              Mid-month gatherings focused on building community and practical
-              faith applications.
+              Release of the Oil and Communion for preservation against the wiles of the enemy.
             </p>
             <span class="text-green-400 font-semibold">
-              Next: {{ first_wednesday_next_month|date:"F d, Y" }}
+              {% if wednesday_passed %} Next: {{ first_wednesday_next_month|date:"F d, Y" }} {% else %} Holds: {{ first_wednesday_this_month|date:"F d, Y" }} {% endif %}
             </span>
           </div>
 
@@ -500,9 +504,11 @@
             <h3 class="text-2xl font-bold mb-4">
               Worship, Word & Wonders Night
             </h3>
-            <p class="text-gray-300 mb-6">September Edition shows up soon.</p>
+            <p class="text-gray-300 mb-6">
+              {{ last_friday_this_month|date:"F" }} Edition of the monthly night vigils {% if friday_passed %} is here. {% else %} shows up soon.{% endif %}
+            </p>
             <span class="text-orange-400 font-semibold">
-              Next: {{ last_friday_this_month|date:"F d, Y" }}
+            {% if not friday_passed %}  Next: {% endif %} {{ last_friday_this_month|date:"F d, Y" }}
             </span>
           </div>
         </div>
