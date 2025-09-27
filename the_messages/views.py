@@ -28,20 +28,30 @@ def home(request):
     today = datetime.today()
     first_day_next_month = (today.replace(day=1) + timedelta(days=31)).replace(day=1)
     first_sunday_next_month = first_day_next_month + timedelta(days=(6 - first_day_next_month.weekday()))
+    first_sunday_this_month = today.replace(day=1) + timedelta(days=(6 - today.replace(day=1).weekday()))
+    sunday_passed = True if datetime.today().date() >= first_sunday_this_month.date() else False
 
     # Also return the first Wednesday of next month
     first_wednesday_next_month = first_day_next_month + timedelta(days=(2 - first_day_next_month.weekday() + 7) % 7)
+    first_wednesday_this_month = today.replace(day=1) + timedelta(days=(2 - today.replace(day=1).weekday()))
+    wednesday_passed = True if datetime.today().date() >= first_wednesday_this_month.date() else False
 
     # Finally return the last Friday of this month
     last_day_this_month = (today.replace(day=1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
     last_friday_this_month = last_day_this_month - timedelta(days=(last_day_this_month.weekday() - 4) % 7)
+    friday_passed = True if datetime.today().date() >= last_friday_this_month.date() else False
 
     return render(request, "the_messages/home.html", {
         "last_messages": last_messages,
         "featured_message": featured_message,
         "first_sunday_next_month": first_sunday_next_month,
+        "first_sunday_this_month": first_sunday_this_month,
+        "sunday_passed": sunday_passed,
         "first_wednesday_next_month": first_wednesday_next_month,
-        "last_friday_this_month": last_friday_this_month
+        "first_wednesday_this_month": first_wednesday_this_month,
+        "wednesday_passed": wednesday_passed,
+        "last_friday_this_month": last_friday_this_month,
+        "friday_passed": friday_passed,
     })
 
 def messages(request):
