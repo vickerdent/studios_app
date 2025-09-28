@@ -6,10 +6,10 @@
 {% load static %}
 {% load humanize %}
 
-<meta name="twitter:card" content="summary" />
+<meta name="twitter:card" content="summary_large_image" />
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ request.build_absolute_uri }}" />
-<meta property="og:title" content="{{ message.name }} by {{ message.author.name }} | Vickerdent Studios" />
+<meta property="og:title" content="Download {{ message.name }} by {{ message.author.name }}" />
 <meta property="og:description" content="{{ message.description|truncatewords:30 }}" />
 <meta property="og:image" content="{{ message.thumbnail.url }}" />
 <script src="{% static 'src/mess-details.js' %}"></script>
