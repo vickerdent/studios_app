@@ -3,6 +3,7 @@
 {% load compress %}
 <!--  -->
 {% load static %}
+{% load webpush_notifications %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +12,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{% block title %}{% endblock %} - Vickerdent Studios</title>
     <meta name="description" content="{% block description %}{% endblock %}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:title" content="{% block social_title %}{% endblock %}" />
+    <meta property="og:description" content="{% block social_description %}{% endblock %}" />
+    <meta property="og:image" content="{% block social_image %}{% endblock %}" />
     <link rel="shortcut icon" href="{% static 'src/images/logo.png' %}" type="image/png">
+    {% webpush_header %}
     {% compress css %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}" />
     {% endcompress %}

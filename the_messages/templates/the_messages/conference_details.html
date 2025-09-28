@@ -1,10 +1,14 @@
 {% extends "the_messages/_base.html" %}
+{% load static %}
 <!-- Space -->
-{% block title %} {{ conference.conference_name }} | Conferences {% endblock %}
-{% block description %} See all messages and other related information about the {{ conference.conference_name }} {% endblock %}
+{% block title %}{{ conference.conference_name }} | Conferences {% endblock %}
+{% block description %}See all messages and other related information about the {{ conference.conference_name }}{% endblock %}
+{% block social_title %}{{ conference.conference_name }} | Messages, Speakers, Schedule{% endblock %}
+{% block social_description %}Get messages and other related information about the {{ conference.conference_name }}.{% endblock %}
+{% block social_image %}{{ conference.conference_name.thumbnail.url }}{% endblock %}
 <!--  -->
 {% block content %}
-  {% load static %}
+
   <script src="{% static 'src/conference-details.js' %}"></script>
   <!-- Breadcrumb -->
   <section class="bg-gray-800 py-4">

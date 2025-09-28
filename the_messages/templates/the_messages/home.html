@@ -10,6 +10,12 @@
     <title>Home - Vickerdent Studios</title>
     <meta name="description" content="Welcome to Vickerdent Studios" />
     <link rel="shortcut icon" href="{% static 'src/images/logo.png' %}" type="image/png">
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:title" content="Home - Vickerdent Studios" />
+    <meta property="og:description" content="Welcome to Vickerdent Studios, where you can get your messages and conference schedules, all for free." />
+    <meta property="og:image" content="{% static 'src/images/logo.png' %}" />
     {% compress css %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}" />
     {% endcompress %}
@@ -445,7 +451,9 @@
               </svg>
             </div>
             <h3 class="text-2xl font-bold mb-4">Blessing Sunday Service</h3>
-            <p class="text-gray-300 mb-6">Blessing Sunday Service.</p>
+            <p class="text-gray-300 mb-6">
+              Connect with parental declarations by Dr Paul Enenche and Dr Mrs. Becky Paul-Enenche released once each month.
+            </p>
             <span class="text-purple-400 font-semibold">
               {% if sunday_passed %} Next: {{ first_sunday_next_month|date:"F d, Y" }} {% else %} Holds: {{ first_sunday_this_month|date:"F d, Y" }} {% endif %}
             </span>

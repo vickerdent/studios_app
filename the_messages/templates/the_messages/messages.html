@@ -1,10 +1,14 @@
 {% extends "the_messages/_base.html" %}
+{% load static %}
 <!-- Space -->
-{% block title %} Explore Messages {% endblock %}
-{% block description %} Explore Messages by speakers in Dunamis, led by the Senior Pastor, Dr Paul Enenche {% endblock %}
+{% block title %}Explore Messages {% endblock %}
+{% block description %}Explore Messages by speakers in Dunamis, led by the Senior Pastor, Dr Paul Enenche{% endblock %}
+{% block social_title %}Messages & Sermons at Dunamis{% endblock %}
+{% block social_description %}Don't miss out on the latest messages today!{% endblock %}
+{% block social_image %}{% static 'src/images/logo.png' %}{% endblock %}
 <!--  -->
 {% block content %}
-{% load static %}
+
 <script src="{% static 'src/messages.js' %}"></script>
 <style>
   .hero-bg {

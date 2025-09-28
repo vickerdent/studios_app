@@ -154,7 +154,7 @@ def message_details(request, message_id):
         elif len(length_parts) == 3:
             audio_length = int(length_parts[0]) * 3600 + int(length_parts[1]) * 60 + int(length_parts[2])
 
-    print(audio_length)
+    webpush = {"group": "new_messages" }
 
     return render(request, "the_messages/message_details.html", {
         "message": message,
@@ -162,6 +162,7 @@ def message_details(request, message_id):
         "comments": comments,
         "attachments": attachments,
         "audio_length": audio_length,
+        "webpush": webpush,
     })
 
 # View just for adding comments to message
