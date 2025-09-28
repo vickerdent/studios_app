@@ -1,7 +1,7 @@
 {% extends "the_messages/_base.html" %}
 <!-- Space -->
 {% block title %} {{ message.name }} | Messages {% endblock %}
-<!--  -->
+{% block description %} {{ message.name }} by {{ message.author.name }} {% endblock %}
 {% block content %}
 {% load static %}
 {% load humanize %}
@@ -35,9 +35,12 @@
   <!-- Header Section -->
   <section class="gradient-bg py-16">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="grid lg:grid-cols-2 gap-12">
         <!-- Message Info -->
         <div class="slide-up">
+          <figure class="max-w-lg">
+            <img class="h-auto max-w-full rounded-lg" src="{{ message.thumbnail.url }}" alt="image description">
+          </figure>
           <div class="flex items-center gap-3 mb-6">
             {% if message.is_featured %}
             <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">FEATURED</span>

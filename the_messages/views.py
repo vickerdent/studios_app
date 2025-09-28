@@ -147,12 +147,14 @@ def message_details(request, message_id):
 
     # Return length of first attachment in seconds if audio
     audio_length = None
-    if attachments and attachments[0].media_type.type_name == 'audio':
+    if attachments and attachments[0].media_type.type_name.lower() == 'audio':
         length_parts = message.message_length.split(':')
         if len(length_parts) == 2:
             audio_length = int(length_parts[0]) * 60 + int(length_parts[1])
         elif len(length_parts) == 3:
             audio_length = int(length_parts[0]) * 3600 + int(length_parts[1]) * 60 + int(length_parts[2])
+
+    print(audio_length)
 
     return render(request, "the_messages/message_details.html", {
         "message": message,
