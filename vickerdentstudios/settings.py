@@ -220,7 +220,7 @@ MANAGERS = [("Victor", "vickerdent@gmail.com"),]
 # ==============================================================================
 WEBPUSH_SETTINGS = {
     "VAPID_PUBLIC_KEY": config("WEB_PUSH_PUBLIC"),
-    "VAPID_PRIVATE_KEY": config("WEB_PUSH_PUBLIC"),
+    "VAPID_PRIVATE_KEY": config("WEB_PUSH_PRIVATE"),
     "VAPID_ADMIN_EMAIL": "vickerdent@gmail.com"
 }
 
