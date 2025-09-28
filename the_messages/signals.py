@@ -8,7 +8,7 @@ def send_notification(sender, instance, created, **kwargs):
     if created:
         payload = {
             "head": "New Message Added!",
-            "body": "Hello World",
+            "body": f"Click to download latest message: {instance.name} now.",
             "icon": "https://f005.backblazeb2.com/file/v-Studios/artifacts/logo+(2).png",
             "url": f"https://vickerdentstudios.com/messages/{instance.id}/"
         }
