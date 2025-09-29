@@ -4,6 +4,7 @@ from django.core.paginator import Paginator
 from .models import ONGOING, UPCOMING, Message, MessageGroup
 from .forms import CommentForm
 from django.db.models import Q
+from decouple import config
 
 STATUSES = {
     "uc": "UPCOMING",

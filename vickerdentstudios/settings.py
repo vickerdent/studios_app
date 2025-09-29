@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'the_messages',
     'compressor',
     'django_backblaze_b2',
-    'webpush',
 ]
 
 MIDDLEWARE = [
@@ -218,11 +217,7 @@ MANAGERS = [("Victor", "vickerdent@gmail.com"),]
 # ==============================================================================
 # NOTIFICATIONS SETTINGS
 # ==============================================================================
-WEBPUSH_SETTINGS = {
-    "VAPID_PUBLIC_KEY": config("WEB_PUSH_PUBLIC"),
-    "VAPID_PRIVATE_KEY": config("WEB_PUSH_PRIVATE"),
-    "VAPID_ADMIN_EMAIL": "vickerdent@gmail.com"
-}
+
 
 # if DEBUG:  # We only need to run the watcher in development (given reasons mentioned in the guide).
 #     run_tailwind_watch()
