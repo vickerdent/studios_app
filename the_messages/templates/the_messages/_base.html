@@ -3,7 +3,6 @@
 {% load compress %}
 <!--  -->
 {% load static %}
-{% load webpush_notifications %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,15 +18,15 @@
     <meta property="og:description" content="{% block social_description %}{% endblock %}" />
     <meta property="og:image" content="{% block social_image %}{% endblock %}" />
     <link rel="shortcut icon" href="{% static 'src/images/logo.png' %}" type="image/png">
-    {% webpush_header %}
     {% compress css %}
     <link rel="stylesheet" href="{% static 'src/output.css' %}" />
     {% endcompress %}
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2392453842656142"
      crossorigin="anonymous"></script>
+    <script src="{% static 'navigatorPush.service.js' %}"></script>
   </head>
 
-  <body class="bg-gray-900 text-white">
+  <body class="bg-gray-900 text-white relative">
     <nav class="bg-gray-800 sticky top-0 z-50 backdrop-blur-lg bg-opacity-95">
       <div class="max-w-7xl mx-auto px-6 py-4">
         <div class="flex justify-between items-center">

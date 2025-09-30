@@ -1,5 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+    registerServiceWorker()
+
     // Audio player functionality
     let isPlaying = false;
     let currentTime = 0;
@@ -129,4 +131,164 @@ async function sharePage(name, data) {
     } catch (err) {
         console.log(`Error: ${err}`);
     }
+}
+
+
+// Utils functions:
+
+function urlBase64ToUint8Array (base64String) {
+  var padding = '='.repeat((4 - base64String.length % 4) % 4)
+  var base64 = (base64String + padding)
+    .replace(/\-/g, '+')
+    .replace(/_/g, '/')
+
+  var rawData = window.atob(base64)
+  var outputArray = new Uint8Array(rawData.length)
+
+  for (var i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i)
+  }
+  return outputArray;
+}
+
+var applicationServerKey = "BG6Q0IHbtSWC1RfQex3shIhH2S3LSLl6YEi568Cq4jZg1KT55jRMz6e32y7Qqh-cvqMkGfMth6K2qjlzguPwOGU";
+
+// Register the service worker first
+async function registerServiceWorker() {
+  if ('serviceWorker' in navigator) {
+    // Register from root path with root scope so it can control the entire site
+    try {
+        const registration = await navigator.serviceWorker.register('/sw.js', { scope: '/' });
+        console.log('Service Worker registered successfully!');
+        console.log('Scope:', registration.scope);
+        return registration;
+      } catch (error) {
+        console.error('Service Worker registration failed:', error);
+        throw error;
+      }
+  }
+  return Promise.reject('Service Worker not supported');
+}
+
+function subscribeUser() {
+  if ('Notification' in window && 'serviceWorker' in navigator) {
+    // Wait for service worker to be ready
+    navigator.serviceWorker.ready.then(function (reg) {
+        console.log("Service Worker is ready, now subscribing...");
+        console.log(reg);
+
+      reg.pushManager
+        .subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(
+            applicationServerKey
+          ),
+        })
+        .then(function (sub) {
+            console.log(sub.endpoint);
+
+          var registration_id = sub.endpoint;
+          var data = {
+            p256dh: btoa(
+              String.fromCharCode.apply(
+                null,
+                new Uint8Array(sub.getKey('p256dh'))
+              )
+            ),
+            auth: btoa(
+              String.fromCharCode.apply(
+                null,
+                new Uint8Array(sub.getKey('auth'))
+              )
+            ),
+            registration_id: registration_id,
+            group: "message_requests"
+          }
+
+          requestPOSTToServer(data)
+        })
+        .catch(function (e) {
+            console.log("Error subscribing to push:", e);
+          if (Notification.permission === 'denied') {
+            console.warn('Permission for notifications was denied');
+            document.getElementById("toast-danger").classList.remove("hidden");
+            document.getElementById("toast-danger").classList.add("flex");
+          } else {
+            console.error('Unable to subscribe to push', e);
+            // Show error toast for other errors
+            document.getElementById("toast-danger").classList.remove("hidden");
+            document.getElementById("toast-danger").classList.add("flex");
+          }
+        })
+    }).catch(function(error) {
+      console.error('Service Worker not ready:', error);
+      // Try registering the service worker again
+      registerServiceWorker().then(function() {
+        console.log('Retrying subscription after registration...');
+        // Retry subscription after a short delay
+        setTimeout(function() {
+          subscribeUser();
+        }, 1000);
+      }).catch(function(err) {
+        console.error('Failed to register service worker:', err);
+        document.getElementById("toast-danger").classList.remove("hidden");
+        document.getElementById("toast-danger").classList.add("flex");
+      });
+    });
+  }
+}
+
+// Send the subscription data to your server
+async function requestPOSTToServer (data) {
+  const headers = new Headers();
+  const csrftoken = getCookie("csrftoken");
+  headers.set('Content-Type', 'application/json');
+  headers.set('X-CSRFToken', csrftoken)
+  const requestOptions = {
+    method: 'POST',
+    headers,
+    mode: "same-origin",
+    body: JSON.stringify(data),
+  };
+
+  return (
+    fetch('/notifications/register/', requestOptions)
+    .then((response) => {
+        if (!response.ok) {
+            failToast.show();
+            throw new Error(
+                `HTTP error! Status: ${response.status}`
+            );
+        }
+        return response.json();
+    }).then((data) => {
+        const result = data.result;
+        if (result) {
+            // Successful process
+            const bannerButton = document.getElementById("close-banner");
+            bannerButton.click();
+            document.getElementById("toast-success").classList.remove("hidden");
+            document.getElementById("toast-success").classList.add("flex");
+        }
+    }) .catch((error) => {
+        document.getElementById("toast-danger").classList.remove("hidden");
+        document.getElementById("toast-danger").classList.add("flex");
+        console.error({ error: error });
+    })
+)}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
 }

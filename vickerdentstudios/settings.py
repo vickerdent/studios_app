@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'the_messages',
     'compressor',
     'django_backblaze_b2',
-    'webpush',
+    "push_notifications",
 ]
 
 MIDDLEWARE = [
@@ -218,10 +218,11 @@ MANAGERS = [("Victor", "vickerdent@gmail.com"),]
 # ==============================================================================
 # NOTIFICATIONS SETTINGS
 # ==============================================================================
-WEBPUSH_SETTINGS = {
-    "VAPID_PUBLIC_KEY": config("WEB_PUSH_PUBLIC"),
-    "VAPID_PRIVATE_KEY": config("WEB_PUSH_PRIVATE"),
-    "VAPID_ADMIN_EMAIL": "vickerdent@gmail.com"
+PUSH_NOTIFICATIONS_SETTINGS = {
+    # "WNS_PACKAGE_SECURITY_ID": "[your package security id, e.g: 'ms-app://e-3-4-6234...']",
+    # "WNS_SECRET_KEY": "[your app secret key, e.g.: 'KDiejnLKDUWodsjmewuSZkk']",
+    "WP_PRIVATE_KEY": os.path.join(BASE_DIR, "private_key.pem"),
+    "WP_CLAIMS": {'sub': "mailto:vickerdent@gmail.com"}
 }
 
 # if DEBUG:  # We only need to run the watcher in development (given reasons mentioned in the guide).

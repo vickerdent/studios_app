@@ -21,7 +21,7 @@ jobs:
             git config --global user.email "${{ secrets.GIT_EMAIL }}"
             git config --global user.name "${{ secrets.GIT_USERNAME }}"
             git checkout prod
-            git pull
+            git pull https://${{ secrets.GH_TOKEN }}@github.com/vickerdent/studios_app.git prod
             pip install -r requirements.txt
             python manage.py migrate
             python manage.py collectstatic --noinput

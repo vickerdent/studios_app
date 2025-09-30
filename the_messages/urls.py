@@ -10,4 +10,6 @@ urlpatterns = [
     path('conferences/', views.conferences, name='conferences'),
     path('conferences/<int:conference_id>/', views.conference_details, name='conference_details'),
     path('about/', views.about, name='about'),
+    path('notifications/register/', views.register_notifications, name='register_notifications'),
+    path('sw.js', views.service_worker, name='service_worker'),
 ]
