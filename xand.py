@@ -13,7 +13,7 @@ private_key = ec.generate_private_key(ec.SECP256R1(), default_backend())
 public_key = private_key.public_key()
 
 # Save private key to PEM file
-with open("private_key.pem", "wb") as f:
+with open("aprivate_key.pem", "wb") as f:
     f.write(private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PrivateFormat.PKCS8,
@@ -21,7 +21,7 @@ with open("private_key.pem", "wb") as f:
     ))
 
 # Save public key to PEM file
-with open("public_key.pem", "wb") as f:
+with open("apublic_key.pem", "wb") as f:
     f.write(public_key.public_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo

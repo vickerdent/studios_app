@@ -16,16 +16,12 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             su vickerdent
-            mkdir -p ~/.ssh/ && touch ~/.ssh/known_hosts
-            ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-            eval $(ssh-agent)
-            ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
             cd /home/vickerdent/studios_app
             source venv/bin/activate
             git config --global user.email "${{ secrets.GIT_EMAIL }}"
             git config --global user.name "${{ secrets.GIT_USERNAME }}"
             git checkout prod
-            git pull
+            git pull https://${{ secrets.GH_TOKEN }}@github.com/vickerdent/studios_app.git prod
             pip install -r requirements.txt
             python manage.py migrate
             python manage.py collectstatic --noinput

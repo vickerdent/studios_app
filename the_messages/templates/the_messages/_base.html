@@ -23,9 +23,10 @@
     {% endcompress %}
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2392453842656142"
      crossorigin="anonymous"></script>
+    <script src="{% static 'navigatorPush.service.js' %}"></script>
   </head>
 
-  <body class="bg-gray-900 text-white">
+  <body class="bg-gray-900 text-white relative">
     <nav class="bg-gray-800 sticky top-0 z-50 backdrop-blur-lg bg-opacity-95">
       <div class="max-w-7xl mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
@@ -280,40 +281,6 @@
           console.log("Hi");
         });
       }
-    </script>
-    <script type="module">
-      // Import the functions you need from the SDKs you need
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
-      import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-messaging.js";
-
-      const firebaseConfig = {
-        apiKey: "{{ firebase_api_key }}",
-        authDomain: "vickerdent-studios.firebaseapp.com",
-        projectId: "vickerdent-studios",
-        storageBucket: "vickerdent-studios.firebasestorage.app",
-        messagingSenderId: "1008657253155",
-        appId: "1:1008657253155:web:107a1a9b57ad1df1424296",
-        measurementId: "G-V4ZL2S6TQ4"
-      };
-
-      // Initialize Firebase
-      const app = initializeApp(firebaseConfig);
-      const messaging = getMessaging();
-
-      function requestPermission() {
-        console.log('Requesting permission...');
-        Notification.requestPermission().then((permission) => {
-          if (permission === 'granted') {
-            console.log('Notification permission granted.');
-          }
-        });
-      }
-
-      getToken(messaging, { vapidKey: '{{ vapid_key }}' }).then((currentToken) => {
-        if (currentToken) {
-          console.log(currentToken)
-        }
-      });
     </script>
   </body>
 </html>

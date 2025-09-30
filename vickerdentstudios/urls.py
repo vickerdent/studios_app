@@ -23,7 +23,6 @@ urlpatterns = [
     path('storm_rider_admin/', admin.site.urls),
     path('', include('the_messages.urls')),
     path('', include('django_backblaze_b2.urls')),
-    # re_path(r'^webpush/', include('webpush.urls'))
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

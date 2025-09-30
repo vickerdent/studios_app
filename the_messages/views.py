@@ -4,7 +4,11 @@ from django.core.paginator import Paginator
 from .models import ONGOING, UPCOMING, Message, MessageGroup
 from .forms import CommentForm
 from django.db.models import Q
-from decouple import config
+from push_notifications.models import WebPushDevice
+from django.http import JsonResponse, HttpResponse
+import json
+import os
+from django.conf import settings
 
 STATUSES = {
     "uc": "UPCOMING",
@@ -155,7 +159,9 @@ def message_details(request, message_id):
         elif len(length_parts) == 3:
             audio_length = int(length_parts[0]) * 3600 + int(length_parts[1]) * 60 + int(length_parts[2])
 
-    webpush = {"group": "new_messages" }
+    is_subscribed = False
+    if "device_id" in request.session:
+        is_subscribed = True
 
     return render(request, "the_messages/message_details.html", {
         "message": message,
@@ -163,7 +169,7 @@ def message_details(request, message_id):
         "comments": comments,
         "attachments": attachments,
         "audio_length": audio_length,
-        "webpush": webpush,
+        "is_subscribed": is_subscribed,
     })
 
 # View just for adding comments to message
@@ -229,3 +235,40 @@ def message_group_details(request, group_id):
 def about(request):
 
     return render(request, "the_messages/about.html", {})
+
+def register_notifications(request):
+    if request.method == "POST":
+        post_data = json.loads(request.body.decode("utf-8"))
+        group_name = post_data.get("group", "message_requests")
+        device_id = post_data.get("registration_id")
+
+        if device_id:
+            request.session["device_id"] = device_id
+
+        print(device_id)
+
+        WebPushDevice.objects.create(
+            name=group_name,
+            **{k: v for k, v in post_data.items() if k != "group"}
+        )
+    return JsonResponse(data={"result": True})
+
+def service_worker(request):
+    """
+    Serve the service worker from the root path with proper content type
+    """
+    sw_path = os.path.join(settings.STATIC_ROOT or settings.BASE_DIR, 'the_messages/static/navigatorPush.service.js')
+
+    try:
+        with open(sw_path, 'r', encoding='utf-8') as f:
+            sw_content = f.read()
+        return HttpResponse(sw_content, content_type='application/javascript')
+    except FileNotFoundError:
+        # Fallback to try in BASE_DIR/static
+        try:
+            sw_path = os.path.join(settings.BASE_DIR, 'the_messages/static/navigatorPush.service.js')
+            with open(sw_path, 'r', encoding='utf-8') as f:
+                sw_content = f.read()
+            return HttpResponse(sw_content, content_type='application/javascript')
+        except FileNotFoundError:
+            return HttpResponse('Service Worker not found', status=404)
