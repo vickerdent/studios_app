@@ -241,7 +241,7 @@
               </a>
 
               {% if attachments|length > 0 %}
-              <a href="#the_video">
+              <!-- <a href="#the_video">
                 <div class="download-card bg-gray-700 p-4 rounded-xl hover-glow cursor-pointer">
                   <div class="flex items-center justify-between">
                     <div class="flex items-center gap-4">
@@ -261,7 +261,7 @@
                     </svg>
                   </div>
                 </div>
-              </a>
+              </a> -->
               {% endif %}
             </div>
 
@@ -328,14 +328,14 @@
 
           <!-- Audio Player -->
           {% if attachments|length > 0 %}
-          <div class="audio-controls rounded-xl p-6 mb-8" id="the_audio">
+          <!-- <div class="audio-controls rounded-xl p-6 mb-8" id="the_audio">
             <div class="flex items-center justify-between mb-4">
               <h4 class="text-lg font-semibold">Listen to Audio Message</h4>
               <span class="text-sm text-gray-200">{{ message.message_length }}</span>
             </div>
             <div class="flex items-center gap-4">
               <audio id="player" hidden>
-                <source id="source" src="{{ attachments.0.file.url }}">
+                <source id="source" src="">
               </audio>
               <button id="playButton" data-time="{{ audio_length }}" class="bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full transition-colors cursor-pointer">
                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
@@ -346,15 +346,10 @@
                 <div class="progress-bar h-2 rounded-full" style="width: 0%" id="audioProgress"></div>
               </div>
               <div class="flex items-center gap-2">
-                <!-- <button class="text-gray-400 hover:text-white transition-colors">
-                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 12.018l-11.89-6.862A1 1 0 002 5.946v12.108a1 1 0 001.646.79l11.89-6.862a1 1 0 000-1.664z"></path>
-                  </svg>
-                </button> -->
                 <span class="text-sm text-gray-400 w-16">00:00</span>
               </div>
             </div>
-          </div>
+          </div> -->
           {% endif %}
 
           <!-- Message Description -->

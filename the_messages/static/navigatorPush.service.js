@@ -7,12 +7,13 @@ var getTitle = function (title) {
   return title;
 };
 
-var getNotificationOptions = function (message, message_tag) {
+var getNotificationOptions = function (message, message_tag, url) {
   var options = {
     body: message,
     icon: 'https://f005.backblazeb2.com/file/v-Studios/artifacts/logo+(2).png',
     tag: message_tag,
-    vibrate: [200, 100, 200, 100, 200, 100, 200]
+    vibrate: [200, 100, 200, 100, 200, 100, 200],
+    url: url
   };
   return options;
 };
@@ -28,13 +29,15 @@ self.addEventListener('push', function(event) {
     var title = response_json.title;
     var message = response_json.message;
     var message_tag = response_json.tag;
+    var url = response_json.url
   } catch (err) {
     // Push is a simple text
     var title = "";
     var message = event.data.text();
     var message_tag = "";
+    var url = "https://vickerdentstudios.com"
   }
-  self.registration.showNotification(getTitle(title), getNotificationOptions(message, message_tag));
+  self.registration.showNotification(getTitle(title), getNotificationOptions(message, message_tag, url));
   // Optional: Communicating with our js application. Send a signal
   self.clients.matchAll({includeUncontrolled: true, type: 'window'}).then(function (clients) {
     clients.forEach(function (client) {

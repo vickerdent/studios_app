@@ -88,10 +88,6 @@ class Message(models.Model):
     def attachment_preview(self):
         if self.attachments.count() == 0: # type: ignore
             return mark_safe(f'<a href="/messages/{self.id}/upload_audio/">Upload Audio</a>')
-        else:
-            return mark_safe(
-                f'<audio controls name="media"><source src="{self.attachments.all()[0].file.url}" type="audio/mpeg"></audio>' # type: ignore
-            )
 
 class MessageGroup(models.Model):
     name = models.CharField(max_length=255)
@@ -142,11 +138,11 @@ class Attachment(models.Model):
     def __str__(self):
         return f"Attachment for {self.message} - {self.id} - {self.media_type.type_name}"
 
-    @property
-    def sound_display(self):
-        if self.file and self.media_type.type_name == 'audio':
-            return mark_safe(f'<audio controls name="media"><source src="{self.file.url}" type="audio/mpeg"></audio>')
-        return ""
+    # @property
+    # def sound_display(self):
+    #     if self.file and self.media_type.type_name == 'audio':
+    #         return mark_safe(f'<audio controls name="media"><source src="{self.file.url}" type="audio/mpeg"></audio>')
+    #     return ""
 
 class Author(models.Model):
     name = models.CharField(max_length=255)

@@ -3,7 +3,7 @@ from .models import Message, Author, MediaType, MessageGroup, Attachment, Commen
 
 # Register your models here.
 class MessageAdmin(admin.ModelAdmin):
-    readonly_fields = ('id', 'created_at', 'thumbnail_preview', 'attachment_preview')
+    readonly_fields = ('id', 'created_at', 'thumbnail_preview')
     search_fields = ('name', 'description', 'author__name')
     list_filter = ('date', 'author', 'media_types', 'is_featured', 'is_sunday_service', 'session')
     list_display = ('name', 'author', 'date', 'is_sunday_service', 'thumbnail_preview', 'attachment_preview')
@@ -37,15 +37,15 @@ class MessageGroupAdmin(admin.ModelAdmin):
 class AttachmentAdmin(admin.ModelAdmin):
     readonly_fields = ('id', 'uploaded_at')
     search_fields = ('message__name', 'file__name')
-    list_display = ('message', 'media_type', 'uploaded_at', 'sound_display')
+    list_display = ('message', 'media_type', 'uploaded_at')
     list_filter = ('media_type', 'uploaded_at')
     ordering = ('-uploaded_at',)
 
-    def sound_display(self, obj):
-        return obj.sound_display
+    # def sound_display(self, obj):
+    #     return obj.sound_display
 
-    sound_display.short_description = 'Audio Preview'
-    sound_display.allow_tags = True
+    # sound_display.short_description = 'Audio Preview'
+    # sound_display.allow_tags = True
 
 class AuthorAdmin(admin.ModelAdmin):
     search_fields = ('name',)
