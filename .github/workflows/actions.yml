@@ -23,7 +23,6 @@ jobs:
             git checkout prod
             git pull https://${{ secrets.GH_TOKEN }}@github.com/vickerdent/studios_app.git prod
             pip install -r requirements.txt
-            python manage.py makemigrations --merge
             python manage.py migrate
             python manage.py collectstatic --noinput
             sudo systemctl restart nginx
