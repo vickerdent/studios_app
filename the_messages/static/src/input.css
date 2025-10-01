@@ -198,6 +198,20 @@ html {
     border-radius: 12px;
 }
 
+.upload-area {
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -12px rgba(102, 126, 234, 0.3);
+}
+
+.upload-area.drag-over {
+    background: rgba(102, 126, 234, 0.2);
+    border-color: #667eea;
+}
+
 .progress-bar {
     background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
     transition: width 0.3s ease;
@@ -216,6 +230,10 @@ html {
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
+}
+
+.uploading {
+    animation: pulse 2s ease-in-out infinite;
 }
 
 .transcript-section {

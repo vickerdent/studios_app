@@ -34,7 +34,7 @@
             <img src="{% static 'src/images/logo.png' %}" alt="Vickerdent Studios Logo" class="h-10 w-10 mr-3 rounded-lg"/>
             Vickerdent Studios
           </a>
-          <div class="hidden md:flex space-x-8">
+          <div class="hidden md:flex items-center space-x-8">
             <a href="{% url 'home' %}" class="hover:text-gray-200 font-semibold transition-colors">Home</a>
             {% url 'messages' as mess_url %}
             {% if request.path == mess_url %}
@@ -54,6 +54,11 @@
             {% else %}
               <a href="{% url 'about' %}" class="hover:text-gray-200 font-semibold transition-colors">About</a>
             {% endif %} -->
+            {% if user.is_authenticated %}
+              <a href="{% url 'logout' %}" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg text-sm font-semibold transition-colors">
+                Logout
+              </a>
+            {% endif %}
           </div>
           <button type="button" class="md:hidden" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
             <svg

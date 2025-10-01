@@ -258,7 +258,7 @@
               </p>
               <div class="flex flex-col md:flex-row items-end md:items-center justify-end gap-4 text-[10px] md:text-sm text-gray-400">
                 <span class="text-nowrap">
-                  {{ upcoming_conference.start_date|date:"M d" }}-{{ upcoming_conference.end_date|date:"d Y" }}
+                  {{ upcoming_conference.start_date|date:"M d" }}-{{ upcoming_conference.end_date|date:"d, Y" }}
                 </span>
                 <span class="hidden md:flex">•</span>
                 <span>{{ upcoming_conference.location }}</span>
@@ -298,7 +298,7 @@
                   </p>
                   <div class="flex flex-col md:flex-row items-end md:items-center justify-end gap-4 text-[10px] md:text-sm text-gray-400 mb-4">
                     <span class="text-nowrap">
-                      {{ conference.start_date|date:"M d" }}-{{ conference.end_date|date:"d Y" }}
+                      {{ conference.start_date|date:"M d" }}-{{ conference.end_date|date:"d, Y" }}
                     </span>
                     <span class="hidden md:flex">•</span>
                     <span>{{ conference.location }}</span>
@@ -337,7 +337,7 @@
                   </p>
                   <div class="flex flex-col md:flex-row items-start md:items-center justify-start gap-4 text-[10px] md:text-sm text-gray-400 mb-4">
                     <span class="text-nowrap">
-                      {{ conference.start_date|date:"M d" }}-{{ conference.end_date|date:"d Y" }}
+                      {{ conference.start_date|date:"M d" }}-{{ conference.end_date|date:"d, Y" }}
                     </span>
                     <span class="hidden md:flex">•</span>
                     <span>{{ conference.location }}</span>

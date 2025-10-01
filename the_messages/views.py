@@ -5,10 +5,12 @@ from .models import ONGOING, UPCOMING, Message, MessageGroup
 from .forms import CommentForm
 from django.db.models import Q
 from push_notifications.models import WebPushDevice
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpRequest
 import json
 import os
 from django.conf import settings
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
 
 STATUSES = {
     "uc": "UPCOMING",
@@ -34,17 +36,17 @@ def home(request):
     first_day_next_month = (today.replace(day=1) + timedelta(days=31)).replace(day=1)
     first_sunday_next_month = first_day_next_month + timedelta(days=(6 - first_day_next_month.weekday()))
     first_sunday_this_month = today.replace(day=1) + timedelta(days=(6 - today.replace(day=1).weekday()))
-    sunday_passed = True if datetime.today().date() >= first_sunday_this_month.date() else False
+    sunday_passed = True if datetime.today().date() > first_sunday_this_month.date() else False
 
     # Also return the first Wednesday of next month
     first_wednesday_next_month = first_day_next_month + timedelta(days=(2 - first_day_next_month.weekday() + 7) % 7)
     first_wednesday_this_month = today.replace(day=1) + timedelta(days=(2 - today.replace(day=1).weekday()))
-    wednesday_passed = True if datetime.today().date() >= first_wednesday_this_month.date() else False
+    wednesday_passed = True if datetime.today().date() > first_wednesday_this_month.date() else False
 
     # Finally return the last Friday of this month
     last_day_this_month = (today.replace(day=1) + timedelta(days=31)).replace(day=1) - timedelta(days=1)
     last_friday_this_month = last_day_this_month - timedelta(days=(last_day_this_month.weekday() - 4) % 7)
-    friday_passed = True if datetime.today().date() >= last_friday_this_month.date() else False
+    friday_passed = True if datetime.today().date() > last_friday_this_month.date() else False
 
     return render(request, "the_messages/home.html", {
         "last_messages": last_messages,
@@ -272,3 +274,46 @@ def service_worker(request):
             return HttpResponse(sw_content, content_type='application/javascript')
         except FileNotFoundError:
             return HttpResponse('Service Worker not found', status=404)
+
+@login_required
+def upload_audio(request: HttpRequest, message_id):
+    message = Message.objects.get(id=message_id)
+
+    # Also return length of message in minutes
+    length_parts = message.message_length.split(':')
+    message_length_minutes = 0
+    if len(length_parts) == 2:
+        message_length_minutes = int(length_parts[0])
+    elif len(length_parts) == 3:
+        message_length_minutes = int(length_parts[0]) * 60 + int(length_parts[1])
+
+    message_length_minutes += 1 if int(length_parts[-1]) > 0 else 0
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest' and request.method == "POST":
+        # Handle file upload
+        uploaded_file = request.FILES.get('audio_file')
+        # Media type is from message, so always audio
+        media_type = "Audio"
+        # media_type = request.POST.get('media_type')
+        if uploaded_file and media_type:
+            # Save the attachment
+            from .models import Attachment, MediaType
+            media_type_obj, created = MediaType.objects.get_or_create(type_name=media_type)
+            Attachment.objects.create(
+                message=message,
+                file=uploaded_file,
+                media_type=media_type_obj
+            )
+            # redirect to admin site showing all messages
+            return JsonResponse({"success": True, "redirect_url": "/storm_rider_admin/the_messages/message/"})
+            # return redirect('message_details', message_id=message.id)
+
+    return render(request, "the_messages/upload_audio.html", {
+        "message": message,
+        "message_length_minutes": message_length_minutes
+    })
+
+def logout_user(request):
+    logout(request)
+    messages.success(request, "You've been logged out successfully.")
+    return redirect(settings.LOGOUT_REDIRECT_URL)

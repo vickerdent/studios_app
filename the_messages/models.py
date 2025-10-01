@@ -18,7 +18,7 @@ STATUS_CHOICES = [
 ]
 
 MEDIA_TYPES = [
-    ("Audio", "audio"),
+    ("Audio", "Audio"),
     ("Video", "video"),
 ]
 
@@ -83,6 +83,16 @@ class Message(models.Model):
             return mark_safe(f'<img src="{self.thumbnail.url}" width="160" height="90" />')
         return ""
 
+    # Link to upload audio attachment if none else show display attachment
+    @property
+    def attachment_preview(self):
+        if self.attachments.count() == 0: # type: ignore
+            return mark_safe(f'<a href="/messages/{self.id}/upload_audio/">Upload Audio</a>')
+        else:
+            return mark_safe(
+                f'<audio controls name="media"><source src="{self.attachments.all()[0].file.url}" type="audio/mpeg"></audio>' # type: ignore
+            )
+
 class MessageGroup(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
@@ -109,7 +119,7 @@ class MessageGroup(models.Model):
         return ""
 
 class MediaType(models.Model):
-  type_name = models.CharField(max_length=10, choices=MEDIA_TYPES, unique=True, default="audio")
+  type_name = models.CharField(max_length=10, choices=MEDIA_TYPES, unique=True, default="Audio")
 
   def __str__(self):
     return self.type_name

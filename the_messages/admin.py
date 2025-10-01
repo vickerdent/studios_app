@@ -3,10 +3,10 @@ from .models import Message, Author, MediaType, MessageGroup, Attachment, Commen
 
 # Register your models here.
 class MessageAdmin(admin.ModelAdmin):
-    readonly_fields = ('id', 'created_at', 'thumbnail_preview')
+    readonly_fields = ('id', 'created_at', 'thumbnail_preview', 'attachment_preview')
     search_fields = ('name', 'description', 'author__name')
     list_filter = ('date', 'author', 'media_types', 'is_featured', 'is_sunday_service', 'session')
-    list_display = ('name', 'author', 'date', 'is_featured', 'is_sunday_service', 'session', 'thumbnail_preview')
+    list_display = ('name', 'author', 'date', 'is_sunday_service', 'thumbnail_preview', 'attachment_preview')
     ordering = ('-date',)
 
     def thumbnail_preview(self, obj):
@@ -14,6 +14,12 @@ class MessageAdmin(admin.ModelAdmin):
 
     thumbnail_preview.short_description = 'Thumbnail Preview'
     thumbnail_preview.allow_tags = True
+
+    def attachment_preview(self, obj):
+        return obj.attachment_preview
+
+    attachment_preview.short_description = 'Attachment Preview'
+    attachment_preview.allow_tags = True
 
 class MessageGroupAdmin(admin.ModelAdmin):
     readonly_fields = ('id', 'created_at')
