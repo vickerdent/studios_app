@@ -124,10 +124,10 @@
             <span class="text-2xl font-bold">Vickerdent Studios</span>
           </a>
           <div class="hidden md:flex space-x-8">
-            <a href="{% url 'home' %}" class="hover:text-gray-200 transition-colors">Home</a>
-            <a href="{% url 'conferences' %}" class="hover:text-gray-200 transition-colors">Conferences</a>
-            <a href="{% url 'messages' %}" class="hover:text-gray-200 transition-colors">Messages</a>
-            <!-- <a href="{% url 'about' %}" class="hover:text-gray-200 transition-colors">About</a> -->
+            <a href="{% url 'home' %}" class="hover:text-purple-500 transition-colors">Home</a>
+            <a href="{% url 'conferences' %}" class="hover:text-purple-500 transition-colors">Conferences</a>
+            <a href="{% url 'messages' %}" class="hover:text-purple-500 transition-colors">Messages</a>
+            <!-- <a href="{% url 'about' %}" class="hover:text-purple-500 transition-colors">About</a> -->
           </div>
           <button class="md:hidden" data-drawer-target="drawer-navigation" data-drawer-show="drawer-navigation" aria-controls="drawer-navigation">
             <svg
@@ -357,7 +357,7 @@
                   class="aspect-video bg-gradient-to-br from-blue-500 to-purple-600 relative"
                 >
                   <img
-                    src="{{ message.thumbnail.url }}"
+                    src="{% if message.thumbnail %}{{ message.thumbnail.url }}{% endif %}"
                     alt="{{ message.name }}"
                     class="w-full h-full object-cover hover:scale-105 transition-all"
                   />

@@ -182,7 +182,7 @@
             <div
               class="aspect-video relative group"
             >
-              <img src="{{ message.thumbnail.url }}" alt="">
+              <img src="{% if message.thumbnail %}{{ message.thumbnail.url }}{% endif %}" alt="{{ message.name }}">
               <div class="absolute top-4 left-4 flex space-x-2">
                 {% if message.is_sunday_service %}
                   <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-semibold">SUNDAY SERVICE</span>
@@ -201,7 +201,6 @@
                 {{ message.name }}
               </h3>
               <p class="text-gray-400 mb-2">{{ message.author.name }}</p>
-              <!-- <p>{{ message.thumbnail.url }}</p> -->
               <p class="text-gray-300 text-sm mb-4 line-clamp-3">
                 {{ message.description }}
               </p>
