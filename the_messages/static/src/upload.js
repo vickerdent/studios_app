@@ -119,8 +119,10 @@ uploadBtn.addEventListener('click', (e) => {
             cancelBtn.addEventListener("click", () => {
                 xhr.abort();
                 progressBar.style.width = '0%';
-                uploadStatus.textContent = 'Ready to upload'
-                cancelBtn.classList.add("hidden")
+                uploadStatus.textContent = 'Ready to upload';
+                cancelBtn.classList.add("hidden");
+                removeBtn.disabled = false;
+                uploadBtn.disabled = true;
             })
             return xhr;
         },
