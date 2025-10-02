@@ -88,6 +88,7 @@ uploadBtn.addEventListener('click', (e) => {
     e.preventDefault();
     e.stopPropagation();
     uploadBtn.disabled = true;
+    removeBtn.disabled = true;
     uploadBtn.classList.add('uploading');
     cancelBtn.classList.remove("hidden")
 
